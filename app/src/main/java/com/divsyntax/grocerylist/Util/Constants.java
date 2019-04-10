@@ -3,7 +3,7 @@ package com.divsyntax.grocerylist.Util;
 public class Constants
 {
     public static final int DB_VERSION = 1;
-    public static final String DB_NAME = "";
+    public static final String DB_NAME = "GroceryDB";
     public static final String TABLE_NAME = "groceryTbl";
 
     public static final String KEY_ID = "id";

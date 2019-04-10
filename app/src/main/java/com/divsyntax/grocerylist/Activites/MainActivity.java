@@ -6,13 +6,17 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.divsyntax.grocerylist.Data.DBHandler;
+import com.divsyntax.grocerylist.Model.Grocery;
 import com.divsyntax.grocerylist.R;
+import com.google.android.gms.ads.MobileAds;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -20,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private AlertDialog.Builder builder;
     private EditText item, amount;
     private Button saveB;
+    private DBHandler dbHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        dbHandler = new DBHandler(this);
+
+        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -79,13 +87,31 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                saveGrocery(v);
+                if(!item.getText().toString().isEmpty() && !amount.getText().toString().isEmpty() )
+                {
+                    saveGrocery(v);
+                }
+
             }
         });
 
     }
 
     private void saveGrocery(View v) {
+
+        Grocery grocery = new Grocery();
+
+        String groceryItem = item.getText().toString();
+        String amountItem = amount.getText().toString();
+
+        grocery.setName(groceryItem);
+        grocery.setQuantity(amountItem);
+
+        dbHandler.addGrocery(grocery);
+
+        Snackbar.make(v,"Item saved", Snackbar.LENGTH_LONG).show();
+        Log.d("ITEMS", String.valueOf(dbHandler.getCount()));
+
     }
 }
 
