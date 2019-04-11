@@ -1,6 +1,8 @@
 package com.divsyntax.grocerylist.Activites;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -110,8 +112,31 @@ public class MainActivity extends AppCompatActivity {
         dbHandler.addGrocery(grocery);
 
         Snackbar.make(v,"Item saved", Snackbar.LENGTH_LONG).show();
-        Log.d("ITEMS", String.valueOf(dbHandler.getCount()));
+        //Log.d("ITEMS", String.valueOf(dbHandler.getCount()));
 
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                alertDialog.dismiss();
+                startActivity(new Intent(MainActivity.this,ListActivity.class));
+            }
+        },1200);
+    }
+
+    public void gotoList()
+    {
+        if(dbHandler.getCount() > 0)
+        {
+            startActivity(new Intent(MainActivity.this,ListActivity.class));
+            finish();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        gotoList();
     }
 }
 
