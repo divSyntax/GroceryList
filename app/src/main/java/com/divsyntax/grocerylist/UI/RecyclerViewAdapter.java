@@ -49,6 +49,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         viewHolder.grocerycount.setText(grocery.getQuantity());
         viewHolder.date.setText(grocery.getDateAdded());
 
+
     }
 
     @Override
@@ -59,7 +60,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView grocerynname, grocerycount, date;
-        public Button edit, delete,testB;
+        public Button edit, delete;
         public int id;
 
         public ViewHolder(@NonNull View itemView, Context ctx) {
@@ -71,6 +72,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             date = itemView.findViewById(R.id.dateTxt);
             edit = itemView.findViewById(R.id.editBtn);
             delete = itemView.findViewById(R.id.deleteBtn);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -112,7 +114,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                     break;
 
                 case R.id.editBtn:
-
+                    Grocery grocery1 = new Grocery();
+                    //editItem();
                     break;
             }
         }
@@ -127,8 +130,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             alertDialog = builder.create();
             alertDialog.show();
 
-            Button nobutton = itemView.findViewById(R.id.noBtn);
-            Button yesbutton = itemView.findViewById(R.id.yesBtn);
+            Button nobutton = view.findViewById(R.id.noBtn);
+            Button yesbutton = view.findViewById(R.id.yesBtn);
 
 
             nobutton.setOnClickListener(new View.OnClickListener() {
@@ -138,17 +141,23 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                 }
             });
-//
-//            yesbutton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    DBHandler db = new DBHandler(context);
-//                    db.deleteGrocery(id);
-//                    groceryList.remove(getAdapterPosition());
-//                    notifyItemRemoved(getAdapterPosition());
-//                    alertDialog.dismiss();
-//                }
-//            });
+
+            yesbutton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DBHandler db = new DBHandler(context);
+                    db.deleteGrocery(id);
+                    groceryList.remove(getAdapterPosition());
+                    notifyItemRemoved(getAdapterPosition());
+                    alertDialog.dismiss();
+                }
+            });
+        }
+
+        public void editItem(Grocery grocery)
+        {
+            builder = new AlertDialog.Builder(context);
+
         }
     }
 }

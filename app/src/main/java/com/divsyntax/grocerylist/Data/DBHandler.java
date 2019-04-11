@@ -50,6 +50,7 @@ public class DBHandler extends SQLiteOpenHelper
         values.put(Constants.KEY_GROCERY_ITEM, grocery.getName());
         values.put(Constants.KEY_QTY_NUMBER, grocery.getQuantity());
         values.put(Constants.KEY_DATE_NAME, java.lang.System.currentTimeMillis());
+        values.put(Constants.KEY_ID, grocery.getId());
 
         db.insert(Constants.TABLE_NAME,null,values);
         Log.d("Saved: ","Saved");
@@ -114,15 +115,18 @@ public class DBHandler extends SQLiteOpenHelper
         values.put(Constants.KEY_GROCERY_ITEM, grocery.getName());
         values.put(Constants.KEY_QTY_NUMBER, grocery.getQuantity());
         values.put(Constants.KEY_DATE_NAME, java.lang.System.currentTimeMillis());
+        values.put(Constants.KEY_ID, grocery.getId());
 
-       return db.update(Constants.TABLE_NAME, values,Constants.KEY_ID+ "=?", new String[]{String.valueOf(grocery.getId())});
+       return db.update(Constants.TABLE_NAME, values,Constants.KEY_ID+ "=?" , new String[]{String.valueOf(grocery.getId())});
     }
 
     public void deleteGrocery(int id)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
-
-       db.delete(Constants.TABLE_NAME, Constants.KEY_ID + "=?",new String[]{String.valueOf(id)});
+        SQLiteDatabase db = this.getReadableDatabase();
+//        Grocery grocery = new Grocery();
+//        grocery.setId(id);
+        db.delete(Constants.TABLE_NAME , Constants.KEY_ID + "=?" , new String[]{String.valueOf(id)});
+        //db.execSQL("delete from " + Constants.TABLE_NAME + " where " + id + " ");
     }
 
     public int getCount()
@@ -130,7 +134,6 @@ public class DBHandler extends SQLiteOpenHelper
 
         String count = "select * from " + Constants.TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
-
         Cursor cursor = db.rawQuery(count,null);
 
 
