@@ -13,7 +13,7 @@
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713" />
+            android:value="ca-app-pub-7776978978509846~9457816060"/>
 
         <activity
             android:name=".Activites.ListActivity"

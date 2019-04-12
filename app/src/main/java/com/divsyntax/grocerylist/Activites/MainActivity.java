@@ -145,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getBannerAd() {
-        MobileAds.initialize(this,"ca-app-pub-3940256099942544~3347511713");
+        MobileAds.initialize(this,"ca-app-pub-7776978978509846~9457816060");
         AdRequest adRequest = new AdRequest.Builder().build();
         adView.loadAd(adRequest);
     }
