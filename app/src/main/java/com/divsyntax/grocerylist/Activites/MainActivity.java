@@ -18,6 +18,8 @@ import android.widget.EditText;
 import com.divsyntax.grocerylist.Data.DBHandler;
 import com.divsyntax.grocerylist.Model.Grocery;
 import com.divsyntax.grocerylist.R;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.MobileAds;
 
 public class MainActivity extends AppCompatActivity {
@@ -28,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private Button saveB;
     private DBHandler dbHandler;
 
+    private AdView adView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         dbHandler = new DBHandler(this);
+        adView = findViewById(R.id.banner);
 
-        MobileAds.initialize(this, "ca-app-pub-3940256099942544~3347511713");
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -137,6 +141,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         gotoList();
+        getBannerAd();
+    }
+
+    private void getBannerAd() {
+        MobileAds.initialize(this,"ca-app-pub-3940256099942544~3347511713");
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
     }
 }
 
